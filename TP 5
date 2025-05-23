@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>To-do List Esthétique</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 10px;
+    }
+
+    .todo-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px 14px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #74ebd5;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      padding: 12px 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #2980b9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f5f5f5;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      transition: transform 0.2s;
+    }
+
+    li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      color: #999;
+      background-color: #e0e0e0;
+    }
+
+    .task-buttons button {
+      margin-left: 8px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .task-buttons .complete {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    .task-buttons .complete:hover {
+      background-color: #27ae60;
+    }
+
+    .task-buttons .delete {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .task-buttons .delete:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <h1>Ma To-do List</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="Nouvelle tâche..." required>
+      <button type="submit">Ajouter</button>
+    </form>
+    <ul id="todo-list"></ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('todo-form');
+    const input = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-list');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const taskText = input.value.trim();
+      if (taskText === '') return;
+
+      const li = document.createElement('li');
+      li.textContent = taskText;
+
+      const buttonsDiv = document.createElement('div');
+      buttonsDiv.className = 'task-buttons';
+
+      const completeBtn = document.createElement('button');
+      completeBtn.textContent = '✔';
+      completeBtn.className = 'complete';
+      completeBtn.addEventListener('click', () => {
+        li.classList.toggle('completed');
+      });
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = '🗑';
+      deleteBtn.className = 'delete';
+      deleteBtn.addEventListener('click', () => {
+        todoList.removeChild(li);
+      });
+
+      buttonsDiv.appendChild(completeBtn);
+      buttonsDiv.appendChild(deleteBtn);
+      li.appendChild(buttonsDiv);
+      todoList.appendChild(li);
+
+      input.value = '';
+    });
+  </script>
+</body>
+</html>
